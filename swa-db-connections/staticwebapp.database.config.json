@@ -3,7 +3,7 @@
   "data-source": {
     "database-type": "mssql",
     "options": {
-      "set-session-context": false 
+      "set-session-context": false
     },
     "connection-string": "@env('DATABASE_CONNECTION_STRING')"
   },
@@ -20,7 +20,7 @@
     "host": {
       "mode": "production",
       "cors": {
-        "origins": ["http://localhost:4280"],
+        "origins": ["http://localhost:4280", "https://<your-azure-app-name>.azurewebsites.net"],
         "allow-credentials": false
       },
       "authentication": {
@@ -29,12 +29,12 @@
     }
   },
   "entities": {
-    "Person": {
-      "source": "dbo.MyTestPersonTable",
+    "Products": {
+      "source": "dbo.Products",
       "permissions": [
         {
-          "actions": ["*"],
-          "role": "anonymous"
+          "actions": ["read", "create"], 
+          "role": "anonymous" 
         }
       ]
     }

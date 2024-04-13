@@ -1,4 +1,4 @@
-<h1>Static Web Apps Database Connections</h1>
+<!-- <h1>Static Web Apps Database Connections</h1>
 <blockquote>
     Open the console in the browser developer tools to see the API responses.
 </blockquote>
@@ -66,4 +66,43 @@ async function del() {
     console.log(response);
   }
 }
+</script> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProductTableApp</title>
+    <!-- Add stylesheets and scripts here -->
+</head>
+<body>
+<h1>ProductTableApp</h1>
+
+<!-- Add Product Page -->
+<div>
+    <h2>Add Product</h2>
+    <input type="text" id="productID" placeholder="Enter Product ID" />
+    <input type="text" id="productName" placeholder="Enter Product Name" />
+    <input type="text" id="productPrice" placeholder="Enter Product Price" />
+    <!-- <input type="file" id="productImage" accept="image/*" /> -->
+    <button onclick="addProduct()">Add Product</button>
+</div>
+
+<script>
+// JavaScript to interact with the backend API and Azure services
+
+async function addProduct() {
+    const productID = document.getElementById('productID').value;
+    const productName = document.getElementById('productName').value;
+    const productPrice = document.getElementById('productPrice').value;
+    // const productImage = document.getElementById('productImage').files[0];
+
+    // Add logic to upload the image to Azure Blob Storage and store product details in Azure SQL table
+}
+
+// More JavaScript functions to retrieve and display products
 </script>
+
+</body>
+</html>
