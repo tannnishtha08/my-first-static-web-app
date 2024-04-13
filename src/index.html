@@ -82,9 +82,9 @@ async function del() {
 <!-- Add Product Page -->
 <div>
     <h2>Add Product</h2>
-    <input type="text" id="productID" placeholder="Enter Product ID" />
-    <input type="text" id="productName" placeholder="Enter Product Name" />
-    <input type="number" id="productPrice" placeholder="Enter Product Price" />
+    <input type="text" id="ProductId" placeholder="Enter Product ID" />
+    <input type="text" id="ProductName" placeholder="Enter Product Name" />
+    <input type="number" id="Price" placeholder="Enter Product Price" />
     <button onclick="addProduct()">Add Product</button>
 </div>
 
@@ -92,9 +92,9 @@ async function del() {
 // JavaScript to interact with the backend API and Azure services
 
 async function addProduct() {
-    const productID = document.getElementById('productID').value;
-    const productName = document.getElementById('productName').value;
-    const productPrice = parseFloat(document.getElementById('productPrice').value);
+    const productID = document.getElementById('ProductID').value;
+    const productName = document.getElementById('ProductName').value;
+    const productPrice = parseFloat(document.getElementById('Price').value);
 
     const productData = {
         ProductId: productID,
