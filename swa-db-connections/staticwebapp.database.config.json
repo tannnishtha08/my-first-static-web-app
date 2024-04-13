@@ -10,12 +10,12 @@
   "runtime": {
     "rest": {
       "enabled": true,
-      "path": "/rest"
+      "path": "/api"
     },
     "graphql": {
       "allow-introspection": true,
       "enabled": true,
-      "path": "/graphql"
+      "path": "/api/graphql"
     },
     "host": {
       "mode": "production",
@@ -24,7 +24,8 @@
         "allow-credentials": false
       },
       "authentication": {
-        "provider": "StaticWebApps"
+        "provider": "StaticWebApps",
+        "unauthenticated-actions": ["read"] 
       }
     }
   },
@@ -33,8 +34,12 @@
       "source": "dbo.Products",
       "permissions": [
         {
-          "actions": ["read", "create"], 
-          "role": "anonymous" 
+          "actions": ["create"],
+          "roles": ["anonymous"] 
+        },
+        {
+          "actions": ["read"],
+          "roles": ["anonymous"] 
         }
       ]
     }

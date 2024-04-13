@@ -74,7 +74,7 @@ async function del() {
 <head>
     <meta charset="UTF-8">
     <title>ProductTableApp</title>
-    <!-- Add stylesheets and scripts here -->
+    <!-- Ensure to add your stylesheets and scripts as needed -->
 </head>
 <body>
 <h1>ProductTableApp</h1>
@@ -84,8 +84,7 @@ async function del() {
     <h2>Add Product</h2>
     <input type="text" id="productID" placeholder="Enter Product ID" />
     <input type="text" id="productName" placeholder="Enter Product Name" />
-    <input type="text" id="productPrice" placeholder="Enter Product Price" />
-    <!-- <input type="file" id="productImage" accept="image/*" /> -->
+    <input type="number" id="productPrice" placeholder="Enter Product Price" />
     <button onclick="addProduct()">Add Product</button>
 </div>
 
@@ -95,13 +94,36 @@ async function del() {
 async function addProduct() {
     const productID = document.getElementById('productID').value;
     const productName = document.getElementById('productName').value;
-    const productPrice = document.getElementById('productPrice').value;
-    // const productImage = document.getElementById('productImage').files[0];
+    const productPrice = parseFloat(document.getElementById('productPrice').value);
 
-    // Add logic to upload the image to Azure Blob Storage and store product details in Azure SQL table
+    const productData = {
+        ProductId: productID,
+        ProductName: productName,
+        Price: productPrice
+    };
+
+    try {
+        const response = await fetch('/api/Products', { // Use the path you have set for REST API in the configuration
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productData)
+        });
+
+        if (response.ok) {
+            console.log('Product added successfully');
+            // You can clear the form or handle the UI response here
+        } else {
+            console.error('Failed to add product', response.statusText);
+            // Display an error message to the user
+        }
+    } catch (error) {
+        console.error('Network error', error);
+        // Display an error message to the user
+    }
 }
 
-// More JavaScript functions to retrieve and display products
 </script>
 
 </body>
