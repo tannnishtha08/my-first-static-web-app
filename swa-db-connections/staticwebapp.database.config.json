@@ -20,7 +20,7 @@
     "host": {
       "mode": "production",
       "cors": {
-        "origins": ["http://localhost:4280", "https://<your-azure-app-name>.azurewebsites.net"],
+        "origins": ["http://localhost:4280", "https://my-first-static-web-app.azurewebsites.net"],
         "allow-credentials": false
       },
       "authentication": {
