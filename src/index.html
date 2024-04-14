@@ -103,7 +103,7 @@ async function addProduct() {
     };
 
     try {
-        const response = await fetch('/api/Products', { // Use the path you have set for REST API in the configuration
+        const response = await fetch('/data-api/rest/Products/', { // Use the path you have set for REST API in the configuration
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
