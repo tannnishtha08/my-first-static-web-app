@@ -39,18 +39,24 @@
 <script>
 // JavaScript to fetch and display products from the backend API and Azure services
 async function fetchProducts() {
-    const apiUrl = '/data-api/rest/Products/'; // Update with your API endpoint
-
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        const response = await fetch('/data-api/rest/Products/', { // Ensure this is the correct path to your API
+            method: 'GET', // GET is the default method, but it's good to be explicit
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const products = await response.json();
+            // Assume the API returns the list of products in a JSON array
+            displayProducts(products);
+        } else {
+            throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
         }
-        const products = await response.json();
-        displayProducts(products);
     } catch (error) {
-        console.error('Could not fetch products:', error);
-        // Handle error by showing a message to the user, etc.
+        console.error('There was an error fetching the product list:', error);
+        // Handle errors such as displaying a message to the user
     }
 }
 
@@ -59,33 +65,22 @@ function displayProducts(products) {
     productListElement.innerHTML = ''; // Clear previous content
 
     products.forEach(product => {
-        productListElement.appendChild(createProductElement(product));
+        const productElement = document.createElement('div');
+        productElement.className = 'product';
+
+        productElement.innerHTML = `
+            <h3>${product.ProductName}</h3>
+            <p>ID: ${product.ProductId}</p>
+            <p>Price: $${product.Price.toFixed(2)}</p>
+        `;
+
+        productListElement.appendChild(productElement);
     });
 }
 
-function createProductElement(product) {
-    const productDiv = document.createElement('div');
-    productDiv.className = 'product';
-
-    const productName = document.createElement('h3');
-    productName.textContent = product.ProductName;
-
-    const productId = document.createElement('p');
-    productId.textContent = `ID: ${product.ProductId}`;
-
-    const productPrice = document.createElement('p');
-    productPrice.textContent = `Price: $${product.Price}`;
-
-
-    productDiv.appendChild(productName);
-    productDiv.appendChild(productId);
-    productDiv.appendChild(productPrice);
-
-    return productDiv;
-}
-
-// Call fetchProducts when the page is loaded
+// Make sure to call this function when the page is loaded
 window.addEventListener('DOMContentLoaded', fetchProducts);
+
 </script>
 
 </body>
