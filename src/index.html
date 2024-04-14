@@ -92,7 +92,7 @@ async function del() {
 // JavaScript to interact with the backend API and Azure services
 
 async function addProduct() {
-    const productID = document.getElementById('ProductId').value;
+    const productID = parseFloat(document.getElementById('ProductId').value);
     const productName = document.getElementById('ProductName').value;
     const productPrice = parseFloat(document.getElementById('Price').value);
 

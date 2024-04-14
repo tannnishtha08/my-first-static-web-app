@@ -20,7 +20,7 @@
     "host": {
       "mode": "production",
       "cors": {
-        "origins": ["http://localhost:4280", "https://my-first-static-web-app.azurewebsites.net"],
+        "origins": ["http://localhost:4280", "https://yellow-island-063337e0f.5.azurewebsites.net"],
         "allow-credentials": false
       },
       "authentication": {
