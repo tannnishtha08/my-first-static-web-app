@@ -24,8 +24,8 @@
         "allow-credentials": false
       },
       "authentication": {
-        "provider": "StaticWebApps",
-        "unauthenticated-actions": ["read"] 
+        "provider": "StaticWebApps"
+        // "unauthenticated-actions": ["read"] 
       }
     }
   },
@@ -35,11 +35,11 @@
       "permissions": [
         {
           "actions": ["create"],
-          "roles": ["anonymous"] 
+          "role": "anonymous" 
         },
         {
           "actions": ["read"],
-          "roles": ["anonymous"] 
+          "role": "anonymous" 
         }
       ]
     }
