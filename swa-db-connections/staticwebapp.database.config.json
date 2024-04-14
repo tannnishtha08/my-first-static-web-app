@@ -5,7 +5,7 @@
     "options": {
       "set-session-context": false
     },
-    "connection-string": "@env('DATABASE_CONNECTION_STRING')"
+    "connection-string": "Server=tcp:firstsqlserverdatabase.database.windows.net,1433;Initial Catalog=firstsql;Persist Security Info=False;User ID=firstsqlserveruser;Password=Kakali.1970;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   },
   "runtime": {
     "rest": {
@@ -20,12 +20,11 @@
     "host": {
       "mode": "production",
       "cors": {
-        "origins": ["http://localhost:4280", "https://yellow-island-063337e0f.5.azurewebsites.net"],
+        "origins": ["http://localhost:4280"],
         "allow-credentials": false
       },
       "authentication": {
         "provider": "StaticWebApps"
-        // "unauthenticated-actions": ["read"] 
       }
     }
   },
@@ -34,11 +33,11 @@
       "source": "dbo.Products",
       "permissions": [
         {
-          "actions": ["create"],
+          "actions": ["*"],
           "role": "anonymous" 
         },
         {
-          "actions": ["read"],
+          "actions": ["*"],
           "role": "anonymous" 
         }
       ]
