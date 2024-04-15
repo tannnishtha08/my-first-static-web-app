@@ -24,7 +24,6 @@
         .product img {
             max-width: 100%;
             height: auto;
-            border-radius: 4px;
             margin-top: 10px;
         }
     </style>
@@ -43,18 +42,11 @@
 </div>
 
 <script>
-
-const productData = {
-        ProductId: productID,
-        ProductName: productName,
-        Price: productPrice
-    };
-
 async function fetchProducts() {
     const apiUrl = '/data-api/rest/Products/';
     try {
         const response = await fetch(apiUrl, {
-            method: 'GET',
+            method: 'GET', // Explicitly setting the method for clarity
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -63,7 +55,13 @@ async function fetchProducts() {
         if (!response.ok) {
             throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
         }
+
         const products = await response.json();
+        if (!Array.isArray(products)) {
+            console.error('Data received is not an array:', products);
+            return; // Prevent further execution if data format is incorrect
+        }
+
         displayProducts(products);
     } catch (error) {
         console.error('There was an error fetching the product list:', error);
@@ -73,27 +71,24 @@ async function fetchProducts() {
 
 function displayProducts(products) {
     const productListElement = document.getElementById('productList');
-    productListElement.innerHTML = '';  // Clear previous content
-
-    if (!Array.isArray(products)) {
-        console.error('Expected an array but received:', products);
-        return;  // Exit the function if products is not an array
-    }
+    productListElement.innerHTML = ''; // Clear previous content
 
     products.forEach(product => {
         const productElement = document.createElement('div');
         productElement.className = 'product';
+
         productElement.innerHTML = `
             <h3>${product.ProductName}</h3>
-            <p>ID: ${product.ProductId}</p>
+            <p>ID: ${parseFloat(product.ProductId)}</p>
             <p>Price: $${parseFloat(product.Price).toFixed(2)}</p>
         `;
+
         productListElement.appendChild(productElement);
     });
 }
-        
 
 window.addEventListener('DOMContentLoaded', fetchProducts);
 </script>
+
 </body>
 </html>
