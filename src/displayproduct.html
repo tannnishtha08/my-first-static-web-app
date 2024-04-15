@@ -43,8 +43,15 @@
 </div>
 
 <script>
+
+const productData = {
+        ProductId: productID,
+        ProductName: productName,
+        Price: productPrice
+    };
+
 async function fetchProducts() {
-    const apiUrl = 'https://my-first-static-web-app.azurewebsites.net/data-api/rest/Products/';
+    const apiUrl = '/data-api/rest/Products/';
     try {
         const response = await fetch(apiUrl, {
             method: 'GET',
@@ -66,20 +73,25 @@ async function fetchProducts() {
 
 function displayProducts(products) {
     const productListElement = document.getElementById('productList');
-    productListElement.innerHTML = ''; // Clear previous content
+    productListElement.innerHTML = '';  // Clear previous content
+
+    if (!Array.isArray(products)) {
+        console.error('Expected an array but received:', products);
+        return;  // Exit the function if products is not an array
+    }
 
     products.forEach(product => {
         const productElement = document.createElement('div');
         productElement.className = 'product';
         productElement.innerHTML = `
             <h3>${product.ProductName}</h3>
-            <p>ID: ${parseFloat(product.ProductId)}</p>
+            <p>ID: ${product.ProductId}</p>
             <p>Price: $${parseFloat(product.Price).toFixed(2)}</p>
-            <img src="${product.PhotoUrl}" alt="${product.ProductName}" />
         `;
         productListElement.appendChild(productElement);
     });
 }
+        
 
 window.addEventListener('DOMContentLoaded', fetchProducts);
 </script>
