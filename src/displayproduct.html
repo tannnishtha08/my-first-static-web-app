@@ -44,6 +44,7 @@ async function list() {
   const response = await fetch(endpoint);
   const data = await response.json();
   console.table(data.value);
+  displayProducts(data.products);
 }
 // async function fetchProducts() {
 //     const apiUrl = 'https://<your-azure-function-app-name>.azurewebsites.net/api/YourFunctionName';
@@ -77,27 +78,27 @@ async function list() {
 
 
 
-// function displayProducts(products) {
-//     const productListElement = document.getElementById('productList');
-//     productListElement.innerHTML = ''; // Clear previous content
+function displayProducts(products) {
+    const productListElement = document.getElementById('productList');
+    productListElement.innerHTML = ''; // Clear previous content
 
-//     if (!products || !products.length) {
-//         productListElement.innerHTML = '<p>No products found.</p>';
-//         return;
-//     }
+    if (!products || !products.length) {
+        productListElement.innerHTML = '<p>No products found.</p>';
+        return;
+    }
 
-//     products.forEach(product => {
-//         const productElement = document.createElement('div');
-//         productElement.className = 'product';
-//         productElement.innerHTML = `
-//             <h3>${product.ProductName}</h3>
-//             <p>ID: ${product.ProductId}</p>
-//             <p>Price: $${parseFloat(product.Price).toFixed(2)}</p>
-//         `;
+    products.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'product';
+        productElement.innerHTML = `
+            <h3>${product.ProductName}</h3>
+            <p>ID: ${parseFloat(product.ProductId)}</p>
+            <p>Price: $${parseFloat(product.Price).toFixed(2)}</p>
+        `;
 
-//         productListElement.appendChild(productElement);
-//     });
-// }
+        productListElement.appendChild(productElement);
+    });
+}
 
 // window.addEventListener('DOMContentLoaded', fetchProducts);
 </script>
