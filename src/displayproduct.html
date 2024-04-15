@@ -4,59 +4,63 @@
     <meta charset="UTF-8">
     <title>Display Products - ProductTableApp</title>
     <style>
-        /* Add your CSS styling here */
+        body {
+            font-family: Arial, sans-serif;
+        }
         #productList {
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
             justify-content: center;
+            margin-top: 20px;
         }
         .product {
             border: 1px solid #ccc;
             padding: 16px;
             border-radius: 8px;
             width: 200px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 10px;
         }
     </style>
-    <!-- Link to additional stylesheets if needed -->
 </head>
 <body>
 <h1>ProductTableApp</h1>
-
-<!-- Navigation Link to the Add Product Page -->
 <nav>
     <a href="index.html">Add Product</a>
 </nav>
 
-<!-- Display Product Page -->
 <div>
     <h2>Product List</h2>
     <div id="productList">
-        <!-- Products will be displayed here -->
+        <!-- Products will be dynamically inserted here -->
     </div>
 </div>
 
 <script>
-// JavaScript to fetch and display products from the backend API and Azure services
 async function fetchProducts() {
+    const apiUrl = 'https://my-first-static-web-app.azurewebsites.net/data-api/rest/Products/';
     try {
-        const response = await fetch('/data-api/rest/Products/', { // Ensure this is the correct path to your API
-            method: 'GET', // GET is the default method, but it's good to be explicit
+        const response = await fetch(apiUrl, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
 
-        if (response.ok) {
-            const products = await response.json();
-            // Assume the API returns the list of products in a JSON array
-            displayProducts(products);
-        } else {
+        if (!response.ok) {
             throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
         }
+        const products = await response.json();
+        displayProducts(products);
     } catch (error) {
         console.error('There was an error fetching the product list:', error);
-        // Handle errors such as displaying a message to the user
+        document.getElementById('productList').innerText = 'Failed to load products.';
     }
 }
 
@@ -67,21 +71,17 @@ function displayProducts(products) {
     products.forEach(product => {
         const productElement = document.createElement('div');
         productElement.className = 'product';
-
         productElement.innerHTML = `
             <h3>${product.ProductName}</h3>
-            <p>ID: ${product.ProductId}</p>
-            <p>Price: $${product.Price.toFixed(2)}</p>
+            <p>ID: ${parseFloat(product.ProductId)}</p>
+            <p>Price: $${parseFloat(product.Price).toFixed(2)}</p>
+            <img src="${product.PhotoUrl}" alt="${product.ProductName}" />
         `;
-
         productListElement.appendChild(productElement);
     });
 }
 
-// Make sure to call this function when the page is loaded
 window.addEventListener('DOMContentLoaded', fetchProducts);
-
 </script>
-
 </body>
 </html>
