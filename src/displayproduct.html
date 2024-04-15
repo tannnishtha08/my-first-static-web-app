@@ -24,6 +24,7 @@
     </style>
 </head>
 <body>
+
 <h1>ProductTableApp</h1>
 <nav>
     <a href="index.html">Add Product</a>
@@ -34,55 +35,71 @@
     <div id="productList">
         <!-- Products will be dynamically inserted here -->
     </div>
+    <button id="list" onclick="list()">List</button>
 </div>
 
 <script>
-async function fetchProducts() {
-    const apiUrl = '/data-api/rest/Products/';
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'GET', // Explicitly setting the method for clarity
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
-        }
-
-        const products = await response.json();
-        if (!Array.isArray(products)) {
-            console.error('Data received is not an array:', products);
-            return; // Prevent further execution if data format is incorrect
-        }
-
-        displayProducts(products);
-    } catch (error) {
-        console.error('There was an error fetching the product list:', error);
-        document.getElementById('productList').innerText = 'Failed to load products.';
-    }
+async function list() {
+  const endpoint = '/data-api/rest/Product';
+  const response = await fetch(endpoint);
+  const data = await response.json();
+  console.table(data.value);
 }
+// async function fetchProducts() {
+//     const apiUrl = 'https://<your-azure-function-app-name>.azurewebsites.net/api/YourFunctionName';
+//     try {
+//         const response = await fetch(apiUrl, {
+//             method: 'GET',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         });
 
-function displayProducts(products) {
-    const productListElement = document.getElementById('productList');
-    productListElement.innerHTML = ''; // Clear previous content
+//         if (!response.ok) {
+//             throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
+//         }
 
-    products.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.className = 'product';
+//         const data = await response.json();
+//         console.log("Received data:", data); // This will show the structure of the received data
 
-        productElement.innerHTML = `
-            <h3>${product.ProductName}</h3>
-            <p>ID: ${parseFloat(product.ProductId)}</p>
-            <p>Price: $${parseFloat(product.Price).toFixed(2)}</p>
-        `;
+//         // Assuming the actual products are in an array under a property, e.g., data.products
+//         if (!Array.isArray(data.products)) {
+//             console.error('Expected an array but received:', data);
+//             return; // Prevent further execution if data format is incorrect
+//         }
 
-        productListElement.appendChild(productElement);
-    });
-}
+//     displayProducts(data.products);
+//     } catch (error) {
+//         console.error('There was an error fetching the product list:', error);
+//         document.getElementById('productList').innerText = 'Failed to load products.';
+//     }
+// }
 
-window.addEventListener('DOMContentLoaded', fetchProducts);
+
+
+// function displayProducts(products) {
+//     const productListElement = document.getElementById('productList');
+//     productListElement.innerHTML = ''; // Clear previous content
+
+//     if (!products || !products.length) {
+//         productListElement.innerHTML = '<p>No products found.</p>';
+//         return;
+//     }
+
+//     products.forEach(product => {
+//         const productElement = document.createElement('div');
+//         productElement.className = 'product';
+//         productElement.innerHTML = `
+//             <h3>${product.ProductName}</h3>
+//             <p>ID: ${product.ProductId}</p>
+//             <p>Price: $${parseFloat(product.Price).toFixed(2)}</p>
+//         `;
+
+//         productListElement.appendChild(productElement);
+//     });
+// }
+
+// window.addEventListener('DOMContentLoaded', fetchProducts);
 </script>
 
 </body>
