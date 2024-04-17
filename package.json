@@ -6,5 +6,10 @@
   },
   "devDependencies": {
     "@azure/static-web-apps-cli": "^1.1.7"
+  },
+  "dependencies": {
+    "@azure/storage-blob": "^12.17.0",
+    "dotenv": "^16.4.5",
+    "mssql": "^10.0.2"
   }
 }
